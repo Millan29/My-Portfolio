@@ -3,53 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Training Portfolio</title>
+    <title>Lawrence Mungai | Embedded Systems Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const modules = document.querySelectorAll('.module');
+            modules.forEach(module => {
+                module.querySelector('h3').addEventListener('click', () => {
+                    module.classList.toggle('active');
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <header>
-        <h1>My Embedded Systems Training Portfolio</h1>
+        <div class="hero">
+            <img src="images/profile.jpg" alt="Profile Photo">
+            <h1>Lawrence Mungai</h1>
+            <p>Embedded Systems Trainee | Gearbox x Afretec Program</p>
+        </div>
     </header>
+
     <nav>
         <a href="#home">Home</a>
-        <a href="#progress">Progress</a>
-        <a href="#assignments">Assignments & Projects</a>
-        <a href="#about">About & Contact</a>
-        <a href="#resources">Resources & Notes</a>
+        <a href="#modules">Modules</a>
+        <a href="#assignments">Assignments</a>
+        <a href="#about">About</a>
+        <a href="#resources">Resources</a>
     </nav>
 
     <section id="home">
-        <h2>Home</h2>
-        <p>Welcome to my training portfolio where I document my journey through the 12-week embedded systems training program.</p>
+        <h2>Welcome</h2>
+        <p>This is my interactive portfolio documenting my 12-week Embedded Systems training journey. Stay tuned for weekly updates, projects, resources, and more.</p>
     </section>
 
-    <section id="progress">
-        <h2>Progress</h2>
-        <p>Weekly updates on what I've learned and my experiences.</p>
-        <h3>Week 1: Setting Up the Portfolio</h3>
-        <ul>
-            <li>Created an <code>index.html</code> file and a <code>styles.css</code> file for structuring and styling the portfolio.</li>
-            <li>Uploaded the files to a new GitHub repository named <strong>My-Portfolio</strong> and committed the changes.</li>
-            <li>Enabled <strong>GitHub Pages</strong> in the repository settings by selecting the root directory (<code>/</code>) and the <code>main</code> branch for deployment.</li>
-        </ul>
-        <p><strong>Screenshots:</strong></p>
-        <img src="images/filescreated.PNG" alt="Screenshot of project files in GitHub" width="600">
-        <img src="images/landigpage.PNG" alt="Screenshot of the live webpage running on GitHub Pages" width="600">
+    <section id="modules">
+        <h2>Training Modules</h2>
+
+        <div class="module">
+            <h3>Module 1: Introduction & Setup</h3>
+            <div class="module-content">
+                <ul>
+                    <li>Created HTML/CSS portfolio website</li>
+                    <li>Hosted the site using GitHub Pages</li>
+                    <li>Documented the process with screenshots</li>
+                    <img src="images/github-files.png" alt="GitHub Files Screenshot" width="100%">
+                    <img src="images/live-webpage.png" alt="Live Webpage Screenshot" width="100%">
+                </ul>
+            </div>
+        </div>
+
+        <div class="module">
+            <h3>Module 2</h3>
+            <div class="module-content">
+                <p>Coming soon...</p>
+            </div>
+        </div>
+
+        <div class="module">
+            <h3>Module 3</h3>
+            <div class="module-content">
+                <p>Coming soon...</p>
+            </div>
+        </div>
+
+        <div class="module">
+            <h3>Module 4</h3>
+            <div class="module-content">
+                <p>Coming soon...</p>
+            </div>
+        </div>
+
+        <div class="module">
+            <h3>Module 5</h3>
+            <div class="module-content">
+                <p>Coming soon...</p>
+            </div>
+        </div>
+
+        <div class="module">
+            <h3>Module 6</h3>
+            <div class="module-content">
+                <p>Coming soon...</p>
+            </div>
+        </div>
     </section>
 
     <section id="assignments">
         <h2>Assignments & Projects</h2>
-        <p>Details of tasks and projects completed during the training.</p>
+        <p>Details will be updated as the training progresses.</p>
     </section>
 
     <section id="about">
         <h2>About & Contact</h2>
-        <p>Brief bio and contact details.</p>
+        <p>Name: Lawrence Mungai</p>
+        <p>Email: your-email@example.com</p>
     </section>
 
     <section id="resources">
         <h2>Resources & Notes</h2>
-        <p>Useful references and insights from the training.</p>
+        <p>Helpful links, tools, and course notes will appear here as the training continues.</p>
     </section>
 
     <footer>

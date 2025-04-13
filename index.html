@@ -62,18 +62,20 @@
       background-color: #111;
       color: #0f0;
       padding: 10px;
-      margin: 10px 2rem;
+      margin: 10px auto;
       border-radius: 10px;
       box-shadow: 0 0 10px #000;
+      max-width: 90%;
     }
 
     section {
       padding: 2rem;
-      margin: 1rem 2rem;
+      margin: 1.5rem auto;
       background-color: #fff;
       border-radius: 12px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       position: relative;
+      max-width: 90%;
     }
 
     .module-header {
@@ -121,7 +123,7 @@
 
     .media-item {
       position: relative;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
     }
 
     .delete-dot {
@@ -137,7 +139,7 @@
       cursor: pointer;
     }
 
-    .media-item:hover .delete-dot {
+    .media-wrapper:hover .delete-dot {
       display: block;
     }
 
@@ -152,6 +154,7 @@
       section {
         margin: 1rem;
         padding: 1rem;
+        max-width: 95%;
       }
     }
   </style>
@@ -182,7 +185,7 @@
     <div class="edit-circle" onclick="toggleEditor('1')"></div>
     <div class="editor-mode" id="editor1">
       <input type="file" id="imageUpload1" multiple>
-      <input type="text" id="captionInput1" placeholder="Enter image caption">
+      <input type="text" id="captionInput1" placeholder="Enter image/video caption">
       <button onclick="previewImage('1')">Preview</button>
     </div>
     <div class="previewArea" id="previewArea1"></div>
@@ -223,9 +226,11 @@
         const mediaBlock = document.createElement("div");
         mediaBlock.className = "media-item";
         mediaBlock.innerHTML = `
-          ${mediaHTML}
+          <div class="media-wrapper">
+            ${mediaHTML}
+            <div class="delete-dot" onclick="this.closest('.media-item').remove()"></div>
+          </div>
           <p class="media-caption">${caption}</p>
-          <div class="delete-dot" onclick="this.parentElement.remove()"></div>
         `;
         preview.appendChild(mediaBlock);
       };

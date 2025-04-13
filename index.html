@@ -15,11 +15,10 @@
     header {
       background-color: #001f3f;
       color: #fff;
-      padding: 1rem;
+      padding: 1rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      position: relative;
     }
 
     .profile-container {
@@ -63,18 +62,15 @@
       background-color: #111;
       color: #0f0;
       padding: 10px;
-      margin: 10px auto;
-      max-width: 500px;
+      margin: 10px 2rem;
       border-radius: 10px;
       box-shadow: 0 0 10px #000;
     }
 
     section {
       padding: 2rem;
-      margin: auto;
-      max-width: 900px;
+      margin: 1rem 2rem;
       background-color: #fff;
-      margin-top: 1rem;
       border-radius: 12px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       position: relative;
@@ -100,9 +96,11 @@
       background: #fafafa;
     }
 
-    .previewArea img {
+    .previewArea img,
+    .previewArea video {
       max-width: 100%;
-      margin-top: 10px;
+      display: block;
+      border-radius: 8px;
     }
 
     .edit-circle {
@@ -122,17 +120,39 @@
     }
 
     .media-item {
-      margin-bottom: 15px;
+      position: relative;
+      margin-bottom: 30px;
     }
 
-    .media-item button {
-      background: red;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 6px;
+    .delete-dot {
+      width: 12px;
+      height: 12px;
+      background-color: red;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      bottom: -15px;
+      transform: translateX(-50%);
+      display: none;
       cursor: pointer;
-      margin-top: 5px;
+    }
+
+    .media-item:hover .delete-dot {
+      display: block;
+    }
+
+    .media-caption {
+      text-align: center;
+      font-style: italic;
+      margin-top: 0.5rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      .terminal,
+      section {
+        margin: 1rem;
+        padding: 1rem;
+      }
     }
   </style>
 </head>
@@ -157,8 +177,7 @@
   </div>
   <div class="module-content" id="content1">
     <p>
-      Module 1 introduced me to the world of digital project management and proper documentation. I got hands-on with Git and GitHub, learning how to initialize repositories and manage version control like a pro. Integrating Git with VS Code made everything smoother, and before long, I was committing and pushing changes like second nature.
-      Below, I’ve shared a screenshot of my portfolio’s landing page and a glimpse of my GitHub account to showcase the skills I picked up during this module.
+      Module 1 introduced me to the world of digital project management and proper documentation. I got hands-on with Git and GitHub, learning how to initialize repositories and manage version control like a pro.
     </p>
     <div class="edit-circle" onclick="toggleEditor('1')"></div>
     <div class="editor-mode" id="editor1">
@@ -193,19 +212,20 @@
       reader.onload = function (e) {
         let mediaHTML = '';
         if (file.type.startsWith("image/")) {
-          mediaHTML = `<img src="${e.target.result}" alt="Module Image" class="media-item">`;
+          mediaHTML = `<img src="${e.target.result}" alt="Module Image">`;
         } else if (file.type.startsWith("video/")) {
-          mediaHTML = `<video controls class="media-item" width="100%"><source src="${e.target.result}" type="${file.type}">Your browser does not support the video tag.</video>`;
+          mediaHTML = `<video controls><source src="${e.target.result}" type="${file.type}">Your browser does not support the video tag.</video>`;
         } else {
           alert("Unsupported file type");
           return;
         }
 
         const mediaBlock = document.createElement("div");
+        mediaBlock.className = "media-item";
         mediaBlock.innerHTML = `
           ${mediaHTML}
-          <p><em>${caption}</em></p>
-          <button onclick="this.parentElement.remove()">Delete</button>
+          <p class="media-caption">${caption}</p>
+          <div class="delete-dot" onclick="this.parentElement.remove()"></div>
         `;
         preview.appendChild(mediaBlock);
       };
@@ -226,16 +246,6 @@
   }
 
   function loadSavedData() {
-    for (let i = 1; i <= 6; i++) {
-      const img = localStorage.getItem("moduleImage" + i);
-      const caption = localStorage.getItem("moduleCaption" + i);
-      if (img) {
-        document.getElementById("previewArea" + i).innerHTML = `
-          <img src="${img}" alt="Module Image">
-          <p><em>${caption}</em></p>
-        `;
-      }
-    }
     const profile = localStorage.getItem("profilePic");
     if (profile) {
       document.getElementById("profilePic").src = profile;
@@ -251,7 +261,6 @@
       "Upload successful!",
       "Portfolio ready 🚀"
     ];
-
     let i = 0;
     function typeLine() {
       if (i < lines.length) {

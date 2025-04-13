@@ -176,6 +176,11 @@
     content.style.display = content.style.display === "block" ? "none" : "block";
   }
 
+  function toggleEditor(id) {
+    const editor = document.getElementById("editor" + id);
+    editor.style.display = editor.style.display === "block" ? "none" : "block";
+  }
+
   function previewImage(id) {
     const files = document.getElementById("imageUpload" + id).files;
     const caption = document.getElementById("captionInput" + id).value;

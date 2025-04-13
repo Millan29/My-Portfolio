@@ -18,17 +18,9 @@
       background-color: #001f3f;
       color: #fff;
       padding: 1rem;
-      text-align: center;
-      position: relative;
-    }
-
-    #profile-container {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
       display: flex;
       align-items: center;
-      flex-direction: column;
+      gap: 1rem;
     }
 
     #profile-pic {
@@ -36,50 +28,28 @@
       height: 60px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid white;
+      border: 2px solid #00f;
     }
 
-    .change-photo {
-      display: none;
-      width: 14px;
-      height: 14px;
+    .change-profile-pic {
+      width: 12px;
+      height: 12px;
       background-color: blue;
       border-radius: 50%;
-      margin-top: 5px;
+      position: absolute;
+      top: 58px;
+      left: 58px;
       cursor: pointer;
+      display: none;
     }
 
-    #profile-container:hover .change-photo {
+    .profile-container {
+      position: relative;
+      display: inline-block;
+    }
+
+    .profile-container:hover .change-profile-pic {
       display: block;
-    }
-
-    .terminal {
-      background-color: #000;
-      color: #00ff00;
-      font-family: monospace;
-      padding: 1rem;
-      margin: 1rem auto;
-      max-width: 900px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      height: 90px;
-      overflow: hidden;
-    }
-
-    .typed-text {
-      white-space: pre-line;
-      overflow: hidden;
-      border-right: 2px solid #00ff00;
-      animation: blink-caret 0.7s step-end infinite;
-    }
-
-    @keyframes blink-caret {
-      from, to {
-        border-color: transparent;
-      }
-      50% {
-        border-color: #00ff00;
-      }
     }
 
     section {
@@ -107,12 +77,11 @@
       border-right: 12px solid transparent;
       border-top: 20px solid red;
       cursor: pointer;
-      z-index: 10;
-      opacity: 0;
-      transition: opacity 0.3s;
+      z-index: 1000;
+      opacity: 0.4;
     }
 
-    section:hover .editor-toggle {
+    .section:hover .editor-toggle {
       opacity: 1;
     }
 
@@ -130,43 +99,35 @@
       margin-top: 10px;
     }
 
-    .blinker {
-      width: 10px;
-      height: 10px;
-      background-color: green;
-      border-radius: 50%;
-      animation: blink 1s infinite;
-      margin-left: 10px;
-    }
-
-    @keyframes blink {
-      0%, 100% {
-        opacity: 0.2;
-      }
-      50% {
-        opacity: 1;
-      }
+    .terminal {
+      background: black;
+      color: #0f0;
+      font-family: monospace;
+      padding: 1rem;
+      border-radius: 10px;
+      margin: 1rem auto;
+      max-width: 900px;
+      height: 100px;
+      overflow: hidden;
     }
   </style>
 </head>
 
 <body>
   <header>
-    <div id="profile-container">
-      <img id="profile-pic" src="" alt="Profile Picture">
-      <div class="change-photo" onclick="document.getElementById('profileInput').click()"></div>
-      <input type="file" id="profileInput" style="display:none" onchange="updateProfilePic()">
+    <div class="profile-container">
+      <img src="" id="profile-pic" alt="Profile Picture">
+      <div class="change-profile-pic" onclick="document.getElementById('profile-upload').click()"></div>
+      <input type="file" id="profile-upload" style="display:none">
     </div>
     <h1>Lawrence Mungai Portfolio</h1>
   </header>
 
-  <div class="terminal">
-    <div id="typed-text" class="typed-text"></div>
-  </div>
+  <div class="terminal" id="terminal"></div>
 
-  <section id="module1">
-    <h2 onclick="toggleModule('module1')">Module 1: Introduction to Embedded Systems</h2>
-    <div>
+  <section class="section">
+    <h2 onclick="toggleModule('1')">Module 1: Introduction to Embedded Systems</h2>
+    <div id="content1">
       <p>
         In this module, I explored the fundamentals of embedded systems, IDEs like Thonny and Arduino IDE, and got hands-on with simple C programming tasks. My journey began with setting up the environment and writing basic programs like a calculator in C.
       </p>
@@ -176,75 +137,93 @@
         <input type="file" id="imageUpload1">
         <input type="text" id="captionInput1" placeholder="Enter image caption">
         <button onclick="previewImage('1')">Preview</button>
-        <div class="previewArea" id="previewArea1"></div>
       </div>
+      <div class="previewArea" id="previewArea1"></div>
     </div>
   </section>
 
   <script>
-    function toggleModule(moduleId) {
-      const section = document.getElementById(moduleId);
-      const content = section.querySelector('div');
-      content.style.display = (content.style.display === 'none') ? 'block' : 'none';
+    let editorStates = {};
+
+    function toggleModule(id) {
+      const content = document.getElementById('content' + id);
+      content.style.display = content.style.display === 'none' ? 'block' : 'none';
     }
 
     function toggleEditor(id) {
-      const editor = document.getElementById('editor' + id);
-      editor.style.display = (editor.style.display === 'none' || editor.style.display === '') ? 'block' : 'none';
+      editorStates[id] = !editorStates[id];
+      document.getElementById('editor' + id).style.display = editorStates[id] ? 'block' : 'none';
     }
 
     function previewImage(id) {
       const file = document.getElementById("imageUpload" + id).files[0];
       const caption = document.getElementById("captionInput" + id).value;
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        const imageData = {
+          src: e.target.result,
+          caption: caption
+        };
+        localStorage.setItem("imageData" + id, JSON.stringify(imageData));
+        renderImage(id, imageData);
+        document.getElementById("editor" + id).style.display = 'none';
+      };
+
+      reader.readAsDataURL(file);
+    }
+
+    function renderImage(id, data) {
       const preview = document.getElementById("previewArea" + id);
-
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        preview.innerHTML = `
-          <img src="${e.target.result}" alt="preview">
-          <p><em>${caption}</em></p>
-        `;
-        document.getElementById("imageUpload" + id).style.display = 'none';
-        document.getElementById("captionInput" + id).style.display = 'none';
-        preview.previousElementSibling.style.display = 'none';
-      };
-      reader.readAsDataURL(file);
+      preview.innerHTML = `
+        <img src="${data.src}" alt="screenshot">
+        <p><em>${data.caption}</em></p>
+      `;
     }
 
-    function updateProfilePic() {
-      const input = document.getElementById("profileInput");
-      const file = input.files[0];
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        document.getElementById("profile-pic").src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-
-    const terminalMessages = [
-      "Initializing Embedded System...",
-      "Loading Modules...",
-      "System Ready. 👨‍💻"
-    ];
-
-    let currentIndex = 0;
-    let charIndex = 0;
-    const typedTextElement = document.getElementById("typed-text");
-
-    function typeLine() {
-      if (currentIndex >= terminalMessages.length) return;
-      const line = terminalMessages[currentIndex];
-      if (charIndex < line.length) {
-        typedTextElement.textContent += line[charIndex++];
-        setTimeout(typeLine, 60);
-      } else {
-        typedTextElement.textContent += "\n";
-        currentIndex++;
-        charIndex = 0;
-        setTimeout(typeLine, 500);
+    function loadImage(id) {
+      const stored = localStorage.getItem("imageData" + id);
+      if (stored) {
+        const data = JSON.parse(stored);
+        renderImage(id, data);
       }
     }
 
+    loadImage('1');
+
+    const profilePic = document.getElementById("profile-pic");
+    const profileInput = document.getElementById("profile-upload");
+
+    profileInput.addEventListener("change", () => {
+      const file = profileInput.files[0];
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const src = e.target.result;
+        profilePic.src = src;
+        localStorage.setItem("profilePic", src);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const stored = localStorage.getItem("profilePic");
+      if (stored) profilePic.src = stored;
+    });
+
+    const terminal = document.getElementById("terminal");
+    const lines = [
+      "Initializing embedded system...",
+      "Loading modules...",
+      "Running setup()...",
+      "System ready. 🚀"
+    ];
+    let index = 0;
+    function typeLine() {
+      if (index < lines.length) {
+        terminal.innerHTML += lines[index++] + "<br>";
+        setTimeout(typeLine, 800);
+      }
+    }
     typeLine();
   </script>
 </body>

@@ -18,7 +18,43 @@
       background-color: #001f3f;
       color: #fff;
       padding: 1rem;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .profile-container {
+      position: relative;
+      margin-left: 1rem;
+    }
+
+    .profile-pic {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+    }
+
+    .edit-circle {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 16px;
+      height: 16px;
+      background-color: #0074D9;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+    }
+
+    .profile-container:hover .edit-circle {
+      display: block;
+    }
+
+    #profileEditor {
+      display: none;
+      margin-top: 10px;
     }
 
     section {
@@ -84,13 +120,41 @@
       display: block;
       margin-top: 5px;
     }
+
+    /* Embedded animation */
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .blinking-led {
+      width: 10px;
+      height: 10px;
+      background-color: limegreen;
+      border-radius: 50%;
+      animation: blink 1s infinite;
+      margin-left: 10px;
+    }
   </style>
 </head>
 
 <body>
   <header>
+    <div style="display: flex; align-items: center;">
+      <div class="profile-container">
+        <img id="profilePic" class="profile-pic" src="https://via.placeholder.com/60" alt="Profile Photo">
+        <div class="edit-circle" onclick="toggleProfileEditor(event)"></div>
+      </div>
+      <div class="blinking-led" title="Embedded system running"></div>
+    </div>
     <h1>Lawrence Mungai Portfolio</h1>
   </header>
+
+  <div id="profileEditor">
+    <input type="file" id="profileUpload">
+    <button onclick="updateProfilePhoto()">Preview</button>
+  </div>
 
   <!-- MODULE 1 -->
   <section>
@@ -154,6 +218,22 @@
           <em>${caption}</em>
         `;
         editor.classList.add("hidden");
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function toggleProfileEditor(event) {
+      event.stopPropagation();
+      const editor = document.getElementById("profileEditor");
+      editor.style.display = editor.style.display === "block" ? "none" : "block";
+    }
+
+    function updateProfilePhoto() {
+      const file = document.getElementById("profileUpload").files[0];
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById("profilePic").src = e.target.result;
+        document.getElementById("profileEditor").style.display = "none";
       };
       reader.readAsDataURL(file);
     }

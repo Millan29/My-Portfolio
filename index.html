@@ -18,225 +18,234 @@
       background-color: #001f3f;
       color: #fff;
       padding: 1rem;
+      text-align: center;
+      position: relative;
+    }
+
+    #profile-container {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
     }
 
-    .profile-container {
-      position: relative;
-      margin-left: 1rem;
-    }
-
-    .profile-pic {
+    #profile-pic {
       width: 60px;
       height: 60px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #fff;
+      border: 2px solid white;
     }
 
-    .edit-circle {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 16px;
-      height: 16px;
-      background-color: #0074D9;
-      border-radius: 50%;
-      cursor: pointer;
+    .change-photo {
       display: none;
+      width: 14px;
+      height: 14px;
+      background-color: blue;
+      border-radius: 50%;
+      margin-top: 5px;
+      cursor: pointer;
     }
 
-    .profile-container:hover .edit-circle {
+    #profile-container:hover .change-photo {
       display: block;
     }
 
-    #profileEditor {
-      display: none;
-      margin-top: 10px;
+    .terminal {
+      background-color: #000;
+      color: #00ff00;
+      font-family: monospace;
+      padding: 1rem;
+      margin: 1rem auto;
+      max-width: 900px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      height: 90px;
+      overflow: hidden;
+    }
+
+    .typed-text {
+      white-space: pre-line;
+      overflow: hidden;
+      border-right: 2px solid #00ff00;
+      animation: blink-caret 0.7s step-end infinite;
+    }
+
+    @keyframes blink-caret {
+      from, to {
+        border-color: transparent;
+      }
+      50% {
+        border-color: #00ff00;
+      }
     }
 
     section {
+      padding: 2rem;
       margin: auto;
       max-width: 900px;
+      background-color: #fff;
       margin-top: 1rem;
       border-radius: 12px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      background-color: #fff;
-    }
-
-    .module-header {
-      padding: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      background-color: #eaeaea;
-      border-bottom: 1px solid #ccc;
-    }
-
-    .module-content {
-      padding: 1rem;
-      display: none;
       position: relative;
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
     }
 
     .editor-toggle {
       position: absolute;
-      top: 8px;
-      right: 8px;
+      top: 10px;
+      right: 10px;
       width: 0;
       height: 0;
       border-left: 12px solid transparent;
       border-right: 12px solid transparent;
       border-top: 20px solid red;
       cursor: pointer;
-      display: none;
       z-index: 10;
+      opacity: 0;
+      transition: opacity 0.3s;
     }
 
-    .module-content:hover .editor-toggle {
-      display: block;
+    section:hover .editor-toggle {
+      opacity: 1;
     }
 
     .editor-mode {
+      display: none;
       padding: 1rem;
       background-color: #fefefe;
       border: 1px solid #ccc;
-      border-radius: 8px;
       margin-top: 1rem;
-    }
-
-    .hidden {
-      display: none;
+      border-radius: 8px;
     }
 
     .previewArea img {
       max-width: 100%;
       margin-top: 10px;
-      border-radius: 8px;
     }
 
-    .previewArea em {
-      display: block;
-      margin-top: 5px;
-    }
-
-    /* Embedded animation */
-    @keyframes blink {
-      0% { opacity: 1; }
-      50% { opacity: 0; }
-      100% { opacity: 1; }
-    }
-
-    .blinking-led {
+    .blinker {
       width: 10px;
       height: 10px;
-      background-color: limegreen;
+      background-color: green;
       border-radius: 50%;
       animation: blink 1s infinite;
       margin-left: 10px;
+    }
+
+    @keyframes blink {
+      0%, 100% {
+        opacity: 0.2;
+      }
+      50% {
+        opacity: 1;
+      }
     }
   </style>
 </head>
 
 <body>
   <header>
-    <div style="display: flex; align-items: center;">
-      <div class="profile-container">
-        <img id="profilePic" class="profile-pic" src="https://via.placeholder.com/60" alt="Profile Photo">
-        <div class="edit-circle" onclick="toggleProfileEditor(event)"></div>
-      </div>
-      <div class="blinking-led" title="Embedded system running"></div>
+    <div id="profile-container">
+      <img id="profile-pic" src="" alt="Profile Picture">
+      <div class="change-photo" onclick="document.getElementById('profileInput').click()"></div>
+      <input type="file" id="profileInput" style="display:none" onchange="updateProfilePic()">
     </div>
     <h1>Lawrence Mungai Portfolio</h1>
   </header>
 
-  <div id="profileEditor">
-    <input type="file" id="profileUpload">
-    <button onclick="updateProfilePhoto()">Preview</button>
+  <div class="terminal">
+    <div id="typed-text" class="typed-text"></div>
   </div>
 
-  <!-- MODULE 1 -->
-  <section>
-    <div class="module-header" onclick="toggleModule('module1Content')">
-      Module 1: Introduction to Embedded Systems
-    </div>
-    <div class="module-content" id="module1Content">
-      <div class="editor-toggle" onclick="event.stopPropagation(); toggleEditor('editor1');"></div>
+  <section id="module1">
+    <h2 onclick="toggleModule('module1')">Module 1: Introduction to Embedded Systems</h2>
+    <div>
       <p>
-        In this module, I explored the fundamentals of embedded systems, IDEs like Thonny and Arduino IDE, and wrote simple programs like a C-based calculator.
+        In this module, I explored the fundamentals of embedded systems, IDEs like Thonny and Arduino IDE, and got hands-on with simple C programming tasks. My journey began with setting up the environment and writing basic programs like a calculator in C.
       </p>
-      <div id="editor1" class="editor-mode hidden">
-        <input type="file" id="imageUpload1"><br><br>
-        <input type="text" id="captionInput1" placeholder="Enter image caption"><br><br>
-        <button onclick="previewImage(1)">Preview</button>
+      <div class="editor-toggle" onclick="toggleEditor('1')"></div>
+      <div class="editor-mode" id="editor1">
+        <h4>Add Screenshot</h4>
+        <input type="file" id="imageUpload1">
+        <input type="text" id="captionInput1" placeholder="Enter image caption">
+        <button onclick="previewImage('1')">Preview</button>
+        <div class="previewArea" id="previewArea1"></div>
       </div>
-      <div class="previewArea" id="previewArea1"></div>
-    </div>
-  </section>
-
-  <!-- MODULE 2 -->
-  <section>
-    <div class="module-header" onclick="toggleModule('module2Content')">
-      Module 2: Embedded Systems Design
-    </div>
-    <div class="module-content" id="module2Content">
-      <div class="editor-toggle" onclick="event.stopPropagation(); toggleEditor('editor2');"></div>
-      <p>
-        This module focused on component selection, schematic design, and starting the PCB layout. I used basic tools to sketch out the first ideas.
-      </p>
-      <div id="editor2" class="editor-mode hidden">
-        <input type="file" id="imageUpload2"><br><br>
-        <input type="text" id="captionInput2" placeholder="Enter image caption"><br><br>
-        <button onclick="previewImage(2)">Preview</button>
-      </div>
-      <div class="previewArea" id="previewArea2"></div>
     </div>
   </section>
 
   <script>
     function toggleModule(moduleId) {
-      const content = document.getElementById(moduleId);
-      content.style.display = content.style.display === "block" ? "none" : "block";
+      const section = document.getElementById(moduleId);
+      const content = section.querySelector('div');
+      content.style.display = (content.style.display === 'none') ? 'block' : 'none';
     }
 
-    function toggleEditor(editorId) {
-      const editor = document.getElementById(editorId);
-      editor.classList.toggle("hidden");
+    function toggleEditor(id) {
+      const editor = document.getElementById('editor' + id);
+      editor.style.display = (editor.style.display === 'none' || editor.style.display === '') ? 'block' : 'none';
     }
 
     function previewImage(id) {
       const file = document.getElementById("imageUpload" + id).files[0];
       const caption = document.getElementById("captionInput" + id).value;
       const preview = document.getElementById("previewArea" + id);
-      const editor = document.getElementById("editor" + id);
 
       const reader = new FileReader();
       reader.onload = function (e) {
         preview.innerHTML = `
           <img src="${e.target.result}" alt="preview">
-          <em>${caption}</em>
+          <p><em>${caption}</em></p>
         `;
-        editor.classList.add("hidden");
+        document.getElementById("imageUpload" + id).style.display = 'none';
+        document.getElementById("captionInput" + id).style.display = 'none';
+        preview.previousElementSibling.style.display = 'none';
       };
       reader.readAsDataURL(file);
     }
 
-    function toggleProfileEditor(event) {
-      event.stopPropagation();
-      const editor = document.getElementById("profileEditor");
-      editor.style.display = editor.style.display === "block" ? "none" : "block";
-    }
-
-    function updateProfilePhoto() {
-      const file = document.getElementById("profileUpload").files[0];
+    function updateProfilePic() {
+      const input = document.getElementById("profileInput");
+      const file = input.files[0];
       const reader = new FileReader();
       reader.onload = function (e) {
-        document.getElementById("profilePic").src = e.target.result;
-        document.getElementById("profileEditor").style.display = "none";
+        document.getElementById("profile-pic").src = e.target.result;
       };
       reader.readAsDataURL(file);
     }
+
+    const terminalMessages = [
+      "Initializing Embedded System...",
+      "Loading Modules...",
+      "System Ready. 👨‍💻"
+    ];
+
+    let currentIndex = 0;
+    let charIndex = 0;
+    const typedTextElement = document.getElementById("typed-text");
+
+    function typeLine() {
+      if (currentIndex >= terminalMessages.length) return;
+      const line = terminalMessages[currentIndex];
+      if (charIndex < line.length) {
+        typedTextElement.textContent += line[charIndex++];
+        setTimeout(typeLine, 60);
+      } else {
+        typedTextElement.textContent += "\n";
+        currentIndex++;
+        charIndex = 0;
+        setTimeout(typeLine, 500);
+      }
+    }
+
+    typeLine();
   </script>
 </body>
 

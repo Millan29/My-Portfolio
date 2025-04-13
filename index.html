@@ -174,17 +174,14 @@
 
 <div class="terminal" id="terminal"></div>
 
+<!-- Module 1 -->
 <section>
   <div class="module-header" onclick="toggleModule('1')">
     <h2>Module 1: Project Management and Documentation</h2>
   </div>
   <div class="module-content" id="content1">
     <p>
-      Module 1 Module 1 introduced me to the world of digital project management and proper documentation — and that’s where the real journey began. I got hands-on with Git and GitHub, learning how to initialize repositories and manage version control like a pro. Integrating Git with VS Code made everything smoother, and before long, I was committing and pushing changes like second nature.
-
-But it didn’t stop there — I also dived into the foundations of web development with HTML, CSS, and Markdown. That’s what gave birth to this very portfolio you're seeing now. I learned how to create simple yet professional web pages and host them directly on GitHub Pages. The feeling of deploying my first live webpage? Unreal.
-
-Below, I’ve shared a screenshot of my portfolio’s landing page and a glimpse of my GitHub account to showcase the skills I picked up during this module.
+      Module 1 content goes here. Replace with your actual content!
     </p>
     <div class="edit-circle" onclick="toggleEditor('1')"></div>
     <div class="editor-mode" id="editor1">
@@ -193,6 +190,101 @@ Below, I’ve shared a screenshot of my portfolio’s landing page and a glimpse
       <button onclick="previewImage('1')">Preview</button>
     </div>
     <div class="previewArea" id="previewArea1"></div>
+  </div>
+</section>
+
+<!-- Module 2 -->
+<section>
+  <div class="module-header" onclick="toggleModule('2')">
+    <h2>Module 2: Introduction to Embedded C</h2>
+  </div>
+  <div class="module-content" id="content2">
+    <p>
+      Module 2 content goes here. Replace with your actual content!
+    </p>
+    <div class="edit-circle" onclick="toggleEditor('2')"></div>
+    <div class="editor-mode" id="editor2">
+      <input type="file" id="imageUpload2" multiple>
+      <input type="text" id="captionInput2" placeholder="Enter image/video caption">
+      <button onclick="previewImage('2')">Preview</button>
+    </div>
+    <div class="previewArea" id="previewArea2"></div>
+  </div>
+</section>
+
+<!-- Module 3 -->
+<section>
+  <div class="module-header" onclick="toggleModule('3')">
+    <h2>Module 3: Advanced Embedded Programming</h2>
+  </div>
+  <div class="module-content" id="content3">
+    <p>
+      Module 3 content goes here. Replace with your actual content!
+    </p>
+    <div class="edit-circle" onclick="toggleEditor('3')"></div>
+    <div class="editor-mode" id="editor3">
+      <input type="file" id="imageUpload3" multiple>
+      <input type="text" id="captionInput3" placeholder="Enter image/video caption">
+      <button onclick="previewImage('3')">Preview</button>
+    </div>
+    <div class="previewArea" id="previewArea3"></div>
+  </div>
+</section>
+
+<!-- Module 4 -->
+<section>
+  <div class="module-header" onclick="toggleModule('4')">
+    <h2>Module 4: IoT and Cloud Integration</h2>
+  </div>
+  <div class="module-content" id="content4">
+    <p>
+      Module 4 content goes here. Replace with your actual content!
+    </p>
+    <div class="edit-circle" onclick="toggleEditor('4')"></div>
+    <div class="editor-mode" id="editor4">
+      <input type="file" id="imageUpload4" multiple>
+      <input type="text" id="captionInput4" placeholder="Enter image/video caption">
+      <button onclick="previewImage('4')">Preview</button>
+    </div>
+    <div class="previewArea" id="previewArea4"></div>
+  </div>
+</section>
+
+<!-- Module 5 -->
+<section>
+  <div class="module-header" onclick="toggleModule('5')">
+    <h2>Module 5: Final Project and Presentation</h2>
+  </div>
+  <div class="module-content" id="content5">
+    <p>
+      Module 5 content goes here. Replace with your actual content!
+    </p>
+    <div class="edit-circle" onclick="toggleEditor('5')"></div>
+    <div class="editor-mode" id="editor5">
+      <input type="file" id="imageUpload5" multiple>
+      <input type="text" id="captionInput5" placeholder="Enter image/video caption">
+      <button onclick="previewImage('5')">Preview</button>
+    </div>
+    <div class="previewArea" id="previewArea5"></div>
+  </div>
+</section>
+
+<!-- Module 6 -->
+<section>
+  <div class="module-header" onclick="toggleModule('6')">
+    <h2>Module 6: Capstone Project and Final Review</h2>
+  </div>
+  <div class="module-content" id="content6">
+    <p>
+      Module 6 content goes here. Replace with your actual content!
+    </p>
+    <div class="edit-circle" onclick="toggleEditor('6')"></div>
+    <div class="editor-mode" id="editor6">
+      <input type="file" id="imageUpload6" multiple>
+      <input type="text" id="captionInput6" placeholder="Enter image/video caption">
+      <button onclick="previewImage('6')">Preview</button>
+    </div>
+    <div class="previewArea" id="previewArea6"></div>
   </div>
 </section>
 
@@ -268,23 +360,24 @@ Below, I’ve shared a screenshot of my portfolio’s landing page and a glimpse
       "Loading modules...",
       "Connecting to microcontroller...",
       "Upload successful!",
-      "Portfolio ready 🚀"
+      "Portfolio ready for display..."
     ];
-    let i = 0;
+
+    let index = 0;
     function typeLine() {
-      if (i < lines.length) {
-        terminal.innerHTML += lines[i++] + "<br>";
-        setTimeout(typeLine, 1000);
+      if (index < lines.length) {
+        terminal.textContent += lines[index] + "\n";
+        index++;
+        setTimeout(typeLine, 1500);
       }
     }
     typeLine();
   }
 
-  window.onload = () => {
+  document.addEventListener("DOMContentLoaded", () => {
     loadSavedData();
     runTerminalAnimation();
-  };
+  });
 </script>
-
 </body>
 </html>

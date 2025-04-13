@@ -35,10 +35,16 @@
       margin-top: 0;
     }
 
+    .module-header {
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
     .editor-toggle {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
+      position: absolute;
+      top: 10px;
+      left: 10px;
       width: 0;
       height: 0;
       border-left: 12px solid transparent;
@@ -61,6 +67,10 @@
       max-width: 100%;
       margin-top: 10px;
     }
+
+    .previewArea p {
+      font-style: italic;
+    }
   </style>
 </head>
 
@@ -69,30 +79,159 @@
     <h1>Lawrence Mungai Portfolio</h1>
   </header>
 
-  <section>
-    <h2>Module 1: Introduction to Embedded Systems</h2>
-    <p>
-      In this module, I explored the fundamentals of embedded systems, IDEs like Thonny and Arduino IDE, and got hands-on with simple C programming tasks. My journey began with setting up the environment and writing basic programs like a calculator in C.
-    </p>
+  <section id="module1">
+    <div class="module-header" onclick="toggleModule('module1Content')">
+      Module 1: Introduction to Embedded Systems
+    </div>
+    <div id="module1Content" class="module-content">
+      <p>
+        In this module, I explored the fundamentals of embedded systems, IDEs like Thonny and Arduino IDE, and got hands-on with simple C programming tasks. My journey began with setting up the environment and writing basic programs like a calculator in C.
+      </p>
 
-    <div class="editor-mode" id="editor1">
-      <h4>Add Screenshot</h4>
-      <input type="file" id="imageUpload1">
-      <input type="text" id="captionInput1" placeholder="Enter image caption">
-      <button onclick="previewImage('1')">Preview</button>
-      <div class="previewArea" id="previewArea1"></div>
+      <!-- Red Triangle for Image Upload -->
+      <div class="editor-toggle" onclick="toggleEditor('editor1')"></div>
+
+      <!-- Image Upload Editor -->
+      <div class="editor-mode" id="editor1">
+        <h4>Add Screenshot</h4>
+        <input type="file" id="imageUpload1">
+        <input type="text" id="captionInput1" placeholder="Enter image caption">
+        <button onclick="previewImage(1)">Preview</button>
+        <div class="previewArea" id="previewArea1"></div>
+      </div>
     </div>
   </section>
 
-  <div class="editor-toggle" onclick="toggleEditor()"></div>
+  <!-- Repeat for Modules 2-6 -->
+  <section id="module2">
+    <div class="module-header" onclick="toggleModule('module2Content')">
+      Module 2: Embedded Systems Design
+    </div>
+    <div id="module2Content" class="module-content" style="display: none;">
+      <p>
+        In this module, I dove deeper into embedded systems design, including component selection, schematic design, and starting the first PCB layout.
+      </p>
+
+      <!-- Red Triangle for Image Upload -->
+      <div class="editor-toggle" onclick="toggleEditor('editor2')"></div>
+
+      <!-- Image Upload Editor -->
+      <div class="editor-mode" id="editor2">
+        <h4>Add Screenshot</h4>
+        <input type="file" id="imageUpload2">
+        <input type="text" id="captionInput2" placeholder="Enter image caption">
+        <button onclick="previewImage(2)">Preview</button>
+        <div class="previewArea" id="previewArea2"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="module3">
+    <div class="module-header" onclick="toggleModule('module3Content')">
+      Module 3: Microcontroller Programming
+    </div>
+    <div id="module3Content" class="module-content" style="display: none;">
+      <p>
+        This module focused on programming microcontrollers using C and exploring the various peripherals available for interfacing.
+      </p>
+
+      <!-- Red Triangle for Image Upload -->
+      <div class="editor-toggle" onclick="toggleEditor('editor3')"></div>
+
+      <!-- Image Upload Editor -->
+      <div class="editor-mode" id="editor3">
+        <h4>Add Screenshot</h4>
+        <input type="file" id="imageUpload3">
+        <input type="text" id="captionInput3" placeholder="Enter image caption">
+        <button onclick="previewImage(3)">Preview</button>
+        <div class="previewArea" id="previewArea3"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="module4">
+    <div class="module-header" onclick="toggleModule('module4Content')">
+      Module 4: Advanced Embedded Programming
+    </div>
+    <div id="module4Content" class="module-content" style="display: none;">
+      <p>
+        In this module, I tackled advanced concepts in embedded programming such as real-time systems, interrupts, and multi-threading.
+      </p>
+
+      <!-- Red Triangle for Image Upload -->
+      <div class="editor-toggle" onclick="toggleEditor('editor4')"></div>
+
+      <!-- Image Upload Editor -->
+      <div class="editor-mode" id="editor4">
+        <h4>Add Screenshot</h4>
+        <input type="file" id="imageUpload4">
+        <input type="text" id="captionInput4" placeholder="Enter image caption">
+        <button onclick="previewImage(4)">Preview</button>
+        <div class="previewArea" id="previewArea4"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="module5">
+    <div class="module-header" onclick="toggleModule('module5Content')">
+      Module 5: IoT Systems
+    </div>
+    <div id="module5Content" class="module-content" style="display: none;">
+      <p>
+        This module focused on building IoT systems using wireless communication protocols, sensors, and actuators.
+      </p>
+
+      <!-- Red Triangle for Image Upload -->
+      <div class="editor-toggle" onclick="toggleEditor('editor5')"></div>
+
+      <!-- Image Upload Editor -->
+      <div class="editor-mode" id="editor5">
+        <h4>Add Screenshot</h4>
+        <input type="file" id="imageUpload5">
+        <input type="text" id="captionInput5" placeholder="Enter image caption">
+        <button onclick="previewImage(5)">Preview</button>
+        <div class="previewArea" id="previewArea5"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="module6">
+    <div class="module-header" onclick="toggleModule('module6Content')">
+      Module 6: Final Project and Integration
+    </div>
+    <div id="module6Content" class="module-content" style="display: none;">
+      <p>
+        In this module, I worked on my final project, integrating all of the skills learned to build a complete embedded system.
+      </p>
+
+      <!-- Red Triangle for Image Upload -->
+      <div class="editor-toggle" onclick="toggleEditor('editor6')"></div>
+
+      <!-- Image Upload Editor -->
+      <div class="editor-mode" id="editor6">
+        <h4>Add Screenshot</h4>
+        <input type="file" id="imageUpload6">
+        <input type="text" id="captionInput6" placeholder="Enter image caption">
+        <button onclick="previewImage(6)">Preview</button>
+        <div class="previewArea" id="previewArea6"></div>
+      </div>
+    </div>
+  </section>
 
   <script>
-    let editorVisible = false;
-    function toggleEditor() {
-      editorVisible = !editorVisible;
-      document.getElementById('editor1').style.display = editorVisible ? 'block' : 'none';
+    // Toggle visibility of module content
+    function toggleModule(moduleId) {
+      const moduleContent = document.getElementById(moduleId);
+      moduleContent.style.display = moduleContent.style.display === 'none' ? 'block' : 'none';
     }
 
+    // Toggle visibility of the image editor
+    function toggleEditor(editorId) {
+      const editor = document.getElementById(editorId);
+      editor.style.display = editor.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Preview image and caption after upload
     function previewImage(id) {
       const file = document.getElementById("imageUpload" + id).files[0];
       const caption = document.getElementById("captionInput" + id).value;

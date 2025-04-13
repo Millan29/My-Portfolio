@@ -120,6 +120,20 @@
     section:hover .edit-circle {
       display: block;
     }
+
+    .media-item {
+      margin-bottom: 15px;
+    }
+
+    .media-item button {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
   </style>
 </head>
 <body>
@@ -139,21 +153,16 @@
 
 <section>
   <div class="module-header" onclick="toggleModule('1')">
-    <h2>Module 1: : Project Management and Documentation</h2>
+    <h2>Module 1: Project Management and Documentation</h2>
   </div>
   <div class="module-content" id="content1">
     <p>
-    Module 1 introduced me to the world of digital project management and proper documentation — and that’s where the real journey began. I got hands-on with Git and GitHub, learning how to initialize repositories and manage version control like a pro. Integrating Git with VS Code made everything smoother, and before long, I was committing and pushing changes like second nature.
-
-But it didn’t stop there — I also dived into the foundations of web development with HTML, CSS, and Markdown. That’s what gave birth to this very portfolio you're seeing now. I learned how to create simple yet professional web pages and host them directly on GitHub Pages. The feeling of deploying my first live webpage? Unreal.
-
-Below, I’ve shared a screenshot of my portfolio’s landing page and a glimpse of my GitHub account to showcase the skills I picked up during this module.
-
-
+      Module 1 introduced me to the world of digital project management and proper documentation. I got hands-on with Git and GitHub, learning how to initialize repositories and manage version control like a pro. Integrating Git with VS Code made everything smoother, and before long, I was committing and pushing changes like second nature.
+      Below, I’ve shared a screenshot of my portfolio’s landing page and a glimpse of my GitHub account to showcase the skills I picked up during this module.
     </p>
     <div class="edit-circle" onclick="toggleEditor('1')"></div>
     <div class="editor-mode" id="editor1">
-      <input type="file" id="imageUpload1">
+      <input type="file" id="imageUpload1" multiple>
       <input type="text" id="captionInput1" placeholder="Enter image caption">
       <button onclick="previewImage('1')">Preview</button>
     </div>
@@ -161,48 +170,44 @@ Below, I’ve shared a screenshot of my portfolio’s landing page and a glimpse
   </div>
 </section>
 
-<!-- Add more sections up to Module 6 in similar style -->
-
 <script>
   function toggleModule(id) {
     const content = document.getElementById("content" + id);
     content.style.display = content.style.display === "block" ? "none" : "block";
   }
 
-function previewImage(id) {
-  const file = document.getElementById("imageUpload" + id).files[0];
-  const caption = document.getElementById("captionInput" + id).value;
-  const preview = document.getElementById("previewArea" + id);
+  function previewImage(id) {
+    const files = document.getElementById("imageUpload" + id).files;
+    const caption = document.getElementById("captionInput" + id).value;
+    const preview = document.getElementById("previewArea" + id);
 
-  if (!file) return;
+    if (!files.length) return;
 
-  const reader = new FileReader();
-  reader.onload = function (e) {
-    let mediaHTML = '';
-    if (file.type.startsWith("image/")) {
-      mediaHTML = `<img src="${e.target.result}" alt="Module Image">`;
-    } else if (file.type.startsWith("video/")) {
-      mediaHTML = `<video controls width="100%"><source src="${e.target.result}" type="${file.type}">Your browser does not support the video tag.</video>`;
-    } else {
-      alert("Unsupported file type");
-      return;
-    }
+    Array.from(files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        let mediaHTML = '';
+        if (file.type.startsWith("image/")) {
+          mediaHTML = `<img src="${e.target.result}" alt="Module Image" class="media-item">`;
+        } else if (file.type.startsWith("video/")) {
+          mediaHTML = `<video controls class="media-item" width="100%"><source src="${e.target.result}" type="${file.type}">Your browser does not support the video tag.</video>`;
+        } else {
+          alert("Unsupported file type");
+          return;
+        }
 
-    const mediaBlock = document.createElement("div");
-    mediaBlock.innerHTML = `
-      ${mediaHTML}
-      <p><em>${caption}</em></p>
-      <button onclick="this.parentElement.remove()" style="background:red;color:#fff;border:none;padding:4px 8px;border-radius:6px;margin-top:5px;cursor:pointer;">Delete</button>
-    `;
-    mediaBlock.style.marginBottom = "15px";
-
-    preview.appendChild(mediaBlock);
+        const mediaBlock = document.createElement("div");
+        mediaBlock.innerHTML = `
+          ${mediaHTML}
+          <p><em>${caption}</em></p>
+          <button onclick="this.parentElement.remove()">Delete</button>
+        `;
+        preview.appendChild(mediaBlock);
+      };
+      reader.readAsDataURL(file);
+    });
 
     document.getElementById("editor" + id).style.display = "none";
-  };
-  reader.readAsDataURL(file);
-}
-
   }
 
   function uploadProfilePic() {
@@ -257,5 +262,6 @@ function previewImage(id) {
     runTerminalAnimation();
   };
 </script>
+
 </body>
 </html>

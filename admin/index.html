@@ -7,6 +7,16 @@
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <!-- Include the Netlify CMS -->
     <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      }
+      #nc-root {
+        margin-top: 20px;
+      }
+    </style>
   </head>
   <body>
     <!-- Include the Netlify Identity Redirect -->
@@ -20,6 +30,33 @@
           }
         });
       }
+    </script>
+    <!-- Initialize the CMS -->
+    <script>
+      CMS.init({
+        config: {
+          backend: {
+            name: 'git-gateway',
+            branch: 'main'
+          },
+          media_folder: 'images/uploads',
+          public_folder: '/images/uploads',
+          collections: [
+            {
+              name: 'projects',
+              label: 'Projects',
+              folder: 'content/projects',
+              create: true,
+              slug: '{{slug}}',
+              fields: [
+                { label: 'Title', name: 'title', widget: 'string' },
+                { label: 'Description', name: 'description', widget: 'text' },
+                { label: 'Image', name: 'image', widget: 'image' }
+              ]
+            }
+          ]
+        }
+      });
     </script>
   </body>
 </html>
